@@ -1,0 +1,22 @@
+html, body, div, span, form, label, header, a, nav, p, ul, li, aside, h2, h1, h3, h4, section, figure, img {
+  margin: 0;
+  padding: 0;
+  border: 0;
+
+  font: inherit;
+  color: inherit;
+  text-decoration: inherit;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+body {
+  line-height: 1.5;
+  font-family: serif;
+}
+
+img {
+  width: 100%;
+}
