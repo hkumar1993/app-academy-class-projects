@@ -35,9 +35,9 @@ class Board
       @grid[row].each_index do |col|
         pos = [row,col]
         if (0..1).include?(row) || (6..7).include?(row)
-          self[pos] = Piece.new
+          self[pos] = King.new(:W, pos, self)
         else
-          self[pos] = NullPiece.new
+          self[pos] = NullPiece.instance
         end
       end
     end
