@@ -5,10 +5,15 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-User.create(name: Faker::Name.unique.name, email: Faker::Internet.unique.email)
-User.create(name: Faker::Name.unique.name, email: Faker::Internet.unique.email)
-User.create(name: Faker::Name.unique.name, email: Faker::Internet.unique.email)
-User.create(name: Faker::Name.unique.name, email: Faker::Internet.unique.email)
-User.create(name: Faker::Name.unique.name, email: Faker::Internet.unique.email)
-User.create(name: Faker::Name.unique.name, email: Faker::Internet.unique.email)
-User.create(name: Faker::Name.unique.name, email: Faker::Internet.unique.email)
+
+
+10.times {User.create(username: Faker::Internet.unique.user_name)}
+5.times { Artwork.create(
+  title: Faker::Hacker.unique.adjective,
+  image_url: Faker::Avatar.unique.image,
+  artist_id: rand(10) + 1
+  )}
+10.times { ArtworkShare.create(
+  artwork_id: rand(5) + 1,
+  viewer_id: rand(10) + 1
+  )}
