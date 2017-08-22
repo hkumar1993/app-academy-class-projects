@@ -4,25 +4,25 @@ class UsersController < ApplicationController
   end
 
   def create
-    user = User.new(user_params)
-    if user.save
-      render json: user
+    @user = User.new(user_params)
+    if @user.save
+      render json: @user
     else
-      render json: user.errors.full_messages, status: :unprocessable_entity
+      render json: @user.errors.full_messages, status: :unprocessable_entity
     end
   end
 
   def show
-    if user = User.find_by(id: params[:id])
-      render json: user.to_json
+    if @user = User.find_by(id: params[:id])
+      render json: @user.to_json
     else
       render plain: "No user by id : #{params[:id]}"
     end
   end
 
   def destroy
-    if user = User.find_by(id: params[:id])
-      user.destroy
+    if @user = User.find_by(id: params[:id])
+      @user.destroy
       redirect_to '/users'
     else
       render plain: "No user by id : #{params[:id]}"
@@ -30,12 +30,12 @@ class UsersController < ApplicationController
   end
 
   def update
-    if user = User.find_by(id: params[:id])
-      user.update_attributes(user_params)
-      if user.save
-        render json: user
+    if @user = User.find_by(id: params[:id])
+      @user.update_attributes(user_params)
+      if @user.save
+        render json: @user
       else
-        render json: user.errors.full_messages, status: :unprocessable_entity
+        render json: @user.errors.full_messages, status: :unprocessable_entity
       end
     else
       render plain: "No user by id : #{params[:id]}"
@@ -45,7 +45,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :name)
+    params.require(:user).permit(:username)
   end
 
 end
