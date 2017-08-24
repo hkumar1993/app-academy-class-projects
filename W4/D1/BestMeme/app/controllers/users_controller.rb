@@ -1,12 +1,13 @@
 class UsersController < ApplicationController
   def index
+    @users = User.all.order_by(:username)
     render json: User.all.to_json
   end
 
   def create
     @user = User.new(user_params)
     if @user.save
-      render json: @user
+      redirect_to "/users/#{@user[:id]}"
     else
       render json: @user.errors.full_messages, status: :unprocessable_entity
     end
