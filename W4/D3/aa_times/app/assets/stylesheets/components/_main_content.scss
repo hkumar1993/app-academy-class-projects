@@ -1,0 +1,47 @@
+.row{
+  display: flex;
+}
+.row > section{
+  padding: 0 5px;
+}
+.col-2{
+  width: 20%;
+}
+
+.col-3{
+  width: 30%;
+}
+
+.col-5{
+  width: 50%;
+}
+
+.main-content{
+  line-height: 1.5;
+}
+
+.main-content ul{
+  list-style: circle;
+  list-style-position: inside;
+  text-align: justify;
+  li{
+    margin-top: 10px;
+  }
+}
+.col-2,.col-3,.col-5{
+  h1, h2, h3, h4, h5{
+    margin-bottom: 10px;
+  }
+
+  h1 a:hover{
+    text-decoration: underline;
+  }
+}
+.by{
+  padding-top: 10px;
+  color: $gray;
+}
+
+.video-description{
+  justify-content: center;
+}

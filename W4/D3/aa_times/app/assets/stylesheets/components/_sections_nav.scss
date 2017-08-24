@@ -1,0 +1,38 @@
+.section_nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  font-family: $sans-serif;
+  border-bottom: 1px solid $light-gray;
+}
+
+.section_nav > ul{
+  display: flex;
+}
+
+.section_nav li{
+  padding: 10px;
+}
+
+.section_nav button{
+  background: none;
+  padding: 0px;
+  color: #000;
+  font-weight: normal;
+  border: none;
+  text-transform: none;
+  font-size: 12px;
+  border-radius: 0px;
+  padding: 5px;
+  margin: -5px;
+}
+
+.section_nav button:hover {
+	background-color: $light-gray;
+}
+
+
+.section_nav a{
+  text-transform: uppercase;
+  font-size: 10px;
+}
