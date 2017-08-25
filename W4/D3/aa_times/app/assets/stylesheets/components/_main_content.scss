@@ -1,21 +1,7 @@
-.row{
-  display: flex;
-}
+
 .row > section{
   padding: 0 5px;
 }
-.col-2{
-  width: 20%;
-}
-
-.col-3{
-  width: 30%;
-}
-
-.col-5{
-  width: 50%;
-}
-
 .main-content{
   line-height: 1.5;
 }
@@ -44,4 +30,28 @@
 
 .video-description{
   justify-content: center;
+}
+
+section:last-child{
+  justify-content: center;
+}
+
+@media (min-width: 1000px) {
+  .row{
+    display: flex;
+  }
+
+  .col-2{
+    width: 20%;
+  }
+
+  .col-3{
+    width: 30%;
+  }
+
+  .col-5{
+    width: 50%;
+  }
+
+
 }
