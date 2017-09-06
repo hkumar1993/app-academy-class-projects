@@ -68,8 +68,16 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 const FollowToggle = __webpack_require__(1);
+const UsersSearch = __webpack_require__(3);
 
 $(function(){
+  // const $search = $('nav.users-search');
+  // new UsersSearch($search);
+
+  $('nav.users-search').each((idx, el) => {
+    new UsersSearch(el);
+  });
+
   $('input.follow-toggle').each((idx, el) => {
     new FollowToggle(el);
   });
@@ -91,10 +99,10 @@ $(function(){
 const APIUtil = __webpack_require__(2);
 
 class FollowToggle {
-  constructor(el) {
+  constructor(el, options) {
     this.$el = $(el);
-    this.userId = this.$el.data('user-id');
-    this.followState = this.$el.data('initial-follow-state');
+    this.userId = this.$el.data('user-id') || options.userId;
+    this.followState = this.$el.data('initial-follow-state') || options.followState;
     this.render();
     this.$el.on('click', (e) => this.handleClick(e));
   }
@@ -171,11 +179,72 @@ const APIUtil = {
       method: 'DELETE',
       dataType: 'JSON'
     })
+  ),
+
+  searchUsers: (queryVal, success) => (
+    $.ajax({
+      url: `/users/search`,
+      method: 'GET',
+      dataType: 'json',
+      data: {
+        query: queryVal
+      },
+      success
+    })
   )
 
 };
 
 module.exports = APIUtil;
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const APIUtil = __webpack_require__(2);
+const FollowToggle = __webpack_require__(1);
+
+class UsersSearch {
+  constructor(el) {
+    this.$el = $(el);
+    this.$input = $('nav.users-search input');
+    this.$ul = $('ul.users');
+    this.$input.on('input', (e) => this.handleInput(e));
+  }
+
+  handleInput(e) {
+    const val = $(e.currentTarget).val();
+    APIUtil.searchUsers(val, res => this.renderResults(res));
+  }
+
+  renderResults(res){
+    this.$ul.empty();
+    res.forEach((user) => {
+      const $li = $('<li>');
+      const $a = $('<a>');
+      const $input = $('<input>');
+
+      $input.addClass('follow-toggle')
+        .prop('type', 'submit');
+
+      new FollowToggle($input[0], {
+        userId: user.id,
+        followState: user.followed ? 'followed' : 'unfollowed',
+      });
+
+      $a.attr('href', `http://localhost:3000/users/${user.id}`)
+        .text(`${user.username}`);
+
+      $li.append($a)
+        .append($input);
+
+      this.$ul.append($li);
+    });
+  }
+}
+
+module.exports = UsersSearch;
 
 
 /***/ })
