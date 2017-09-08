@@ -1,0 +1,24 @@
+<h2>Add Post</h2>
+
+<%= errors_block flash[:errors] %>
+
+<form action="<%= posts_url %>" method="post">
+
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <br>
+  <label for="Title">Title</label>
+  <input id="Title" type="text" name="post[title]" value="">
+  <br>
+  <label for="URL">URL</label>
+  <input id="URL" type="text" name="post[url]" value="">
+  <br>
+  <label for="Content">Content</label>
+  <input id="Content" type="text" name="post[content]" value="">
+  <br>
+  <label for="Subs">Subs</label><br>
+  <% all_subs.each do |sub| %>
+    <input type="checkbox" name="post[sub_ids][]" value="<%= sub.id %>" <%= "checked" if @sub_id == sub.id %> ><%= sub.title %><br>
+  <% end %>
+
+  <input type="submit" name="" value="Create Post">
+</form>
