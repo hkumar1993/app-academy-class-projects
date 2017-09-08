@@ -107,15 +107,10 @@ $l.ajax = (options) => {
   options.method = options.method.toUpperCase();
 
   const xhr = new XMLHttpRequest();
+
   xhr.open(options.method, options.url);
-
-  xhr.onload = function () {
-  console.log(xhr.status) // for status info
-  console.log(xhr.responseType) //the type of data that was returned
-  console.log(xhr.response) //the actual response. For json api calls, this will be a json string
-  }
-
-  xhr.send(options);
+  xhr.onload = options.success;
+  xhr.send(options.data);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -124,6 +119,22 @@ document.addEventListener('DOMContentLoaded', () => {
     func();
   })
 })
+
+var root = 'https://jsonplaceholder.typicode.com';
+
+let testOptions = {
+  url: root + '/posts/1',
+  method: 'GET',
+  success: function(res) {
+    alert('Found data!');
+    console.log(res);
+  }
+};
+
+
+window.$l(()=>{
+  $l.ajax(testOptions);
+});
 
 
 /***/ }),
