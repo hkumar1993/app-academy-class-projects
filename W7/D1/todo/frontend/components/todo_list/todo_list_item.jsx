@@ -5,14 +5,22 @@ class TodoListItem extends React.Component {
   constructor(props){
     super(props);
     console.log("list",this.props);
+
+    this.deleteTodo = this.deleteTodo.bind(this);
+    this.toggleTodo = this.toggleTodo.bind(this);
   }
 
-  toggleTodo(){
-
+  toggleTodo(e){
+    e.preventDefault();
+    let todo = this.props.todo;
+    todo.done = !todo.done;
+    this.props.store.receiveTodo(todo);
   }
 
-  deleteTodo(){
+  deleteTodo(e){
+    e.preventDefault();
     const key = this.props.todo.key;
+    this.props.store.removeTodo(this.props.todo);
   }
 
   render(){
