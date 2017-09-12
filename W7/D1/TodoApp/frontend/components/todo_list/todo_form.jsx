@@ -1,5 +1,5 @@
 import React from 'react';
-import {receiveTodo} from '../../actions/todo_actions';
+// import {receiveTodo} from '../../actions/todo_actions';
 import { allTodos } from '../../reducers/selectors';
 import uniqueId from '../../util/unique_id';
 
@@ -11,18 +11,20 @@ class TodoForm extends React.Component {
     this.updateBody = this.updateBody.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
-    // console.log('props', props.props.receiveTodo);
-    this.state = {id, title: '', body: ''};
+
+    this.state = {id, title: '', body: '', errors: []};
   }
 
   handleSubmit(e){
     e.preventDefault();
-    console.log(this.props.props.receiveTodo(this.state));
-    this.state = {
-      id: uniqueId(),
-      title: '',
-      body: ''
-    };
+    let todo = this.state;
+
+    // debugger;
+    this.props.createTodo( todo ).then(() => {
+      this.setState({ title: '', body: '', errors: []});
+    }).fail((err) => {
+      this.setState({errors: err.errors});
+    });
   }
 
   updateTitle(e){
@@ -37,15 +39,22 @@ class TodoForm extends React.Component {
 
   render(){
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label> Title
-          <input type="text" name="todo[title]" onChange={this.updateTitle} value={this.state.title}/>
-        </label><br/>
-        <label> Body
-          <textarea name="todo[body]" onChange={this.updateBody} value={this.state.body}></textarea>
-        </label><br/>
-        <input type="submit" value="Create Todo" />
-      </form>
+      <div>
+        <ul>
+          {
+            this.state.errors.map((error)=><li>{error}</li>)
+          }
+        </ul>
+        <form onSubmit={this.handleSubmit}>
+          <label> Title
+            <input type="text" name="todo[title]" onChange={this.updateTitle} value={this.state.title}/>
+          </label><br/>
+          <label> Body
+            <textarea name="todo[body]" onChange={this.updateBody} value={this.state.body}></textarea>
+          </label><br/>
+          <input type="submit" value="Create Todo" />
+        </form>
+      </div>
     );
   }
 
