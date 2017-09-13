@@ -6886,7 +6886,7 @@ module.exports = getEventCharCode;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.createTodo = exports.fetchTodos = exports.REMOVE_TODO = exports.RECEIVE_TODO = exports.RECEIVE_TODOS = undefined;
+exports.deleteTodo = exports.updateTodo = exports.createTodo = exports.fetchTodos = exports.REMOVE_TODO = exports.RECEIVE_TODO = exports.RECEIVE_TODOS = undefined;
 exports.receiveTodos = receiveTodos;
 exports.receiveTodo = receiveTodo;
 exports.removeTodo = removeTodo;
@@ -6933,6 +6933,28 @@ var createTodo = exports.createTodo = function createTodo(todo) {
     return (0, _todo_api_util.newTodo)(todo).then(function (result) {
       dispatch((0, _error_actions.clearErrors)());
       dispatch(receiveTodo(result));
+    }, function (err) {
+      return dispatch((0, _error_actions.receiveErrors)(err.responseJSON));
+    });
+  };
+};
+
+var updateTodo = exports.updateTodo = function updateTodo(todo) {
+  return function (dispatch) {
+    return (0, _todo_api_util.upTodo)(todo).then(function (result) {
+      dispatch((0, _error_actions.clearErrors)());
+      dispatch(receiveTodo(result));
+    }, function (err) {
+      return dispatch((0, _error_actions.receiveErrors)(err.responseJSON));
+    });
+  };
+};
+
+var deleteTodo = exports.deleteTodo = function deleteTodo(todo) {
+  return function (dispatch) {
+    return (0, _todo_api_util.delTodo)(todo).then(function (result) {
+      dispatch((0, _error_actions.clearErrors)());
+      dispatch(removeTodo(todo));
     }, function (err) {
       return dispatch((0, _error_actions.receiveErrors)(err.responseJSON));
     });
@@ -10948,6 +10970,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.requestTodos = requestTodos;
 exports.newTodo = newTodo;
+exports.upTodo = upTodo;
+exports.delTodo = delTodo;
 function requestTodos() {
   return $.ajax({
     method: 'GET',
@@ -10965,6 +10989,28 @@ function newTodo(todo) {
     method: 'POST',
     url: '/api/todos',
     data: data
+  });
+}
+
+function upTodo(todo) {
+  var data = {
+    todo: {
+      title: todo.title,
+      body: todo.body,
+      done: todo.done
+    }
+  };
+  return $.ajax({
+    method: 'PATCH',
+    url: '/api/todos/' + todo.id,
+    data: data
+  });
+}
+
+function delTodo(todo) {
+  return $.ajax({
+    method: 'DELETE',
+    url: '/api/todos/' + todo.id
   });
 }
 
@@ -12232,6 +12278,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var store = (0, _store2.default)();
   window.store = store;
   console.log(store);
+  store.dispatch((0, _todo_actions.fetchTodos)());
   var root = document.getElementById('root');
 
   _reactDom2.default.render(_react2.default.createElement(_root2.default, { store: store }), root);
@@ -25002,6 +25049,7 @@ var todosReducer = function todosReducer() {
       return (0, _merge2.default)({}, state, obj);
 
     case _todo_actions.REMOVE_TODO:
+      console.log("INSIDE REMOVE: ", action);
       obj = {};
       for (var key in state) {
         if (key == action.todo.id) {
@@ -28095,8 +28143,11 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     createTodo: function createTodo(todo) {
       return dispatch((0, _todo_actions.createTodo)(todo));
     },
-    removeTodo: function removeTodo(todo) {
-      return dispatch((0, _todo_actions.removeTodo)(todo));
+    updateTodo: function updateTodo(todo) {
+      return dispatch((0, _todo_actions.updateTodo)(todo));
+    },
+    deleteTodo: function deleteTodo(todo) {
+      return dispatch((0, _todo_actions.deleteTodo)(todo));
     },
     receiveErrors: function receiveErrors(errors) {
       return dispatch((0, _error_actions.receiveErrors)(errors));
@@ -28165,7 +28216,7 @@ var TodoList = function (_React$Component) {
           'ul',
           null,
           this.props.todos.map(function (el) {
-            return _react2.default.createElement(_todo_list_item2.default, { todo: el, key: 'list_' + el.id, store: _this2.props });
+            return _react2.default.createElement(_todo_list_item2.default, { todo: el, key: 'list_' + el.id, store: _this2.props, updateTodo: _this2.props.updateTodo, deleteTodo: _this2.props.deleteTodo });
           })
         ),
         _react2.default.createElement(_todo_form2.default, { createTodo: this.props.createTodo })
@@ -28212,26 +28263,45 @@ var TodoListItem = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (TodoListItem.__proto__ || Object.getPrototypeOf(TodoListItem)).call(this, props));
 
     console.log("list", _this.props);
-
+    _this.state = { loading: false };
     _this.deleteTodo = _this.deleteTodo.bind(_this);
     _this.toggleTodo = _this.toggleTodo.bind(_this);
+    _this.loading = _this.loading.bind(_this);
     return _this;
   }
 
   _createClass(TodoListItem, [{
     key: "toggleTodo",
     value: function toggleTodo(e) {
+      var _this2 = this;
+
       e.preventDefault();
+      this.setState({ loading: true });
       var todo = this.props.todo;
+      console.log("Before", todo);
       todo.done = !todo.done;
-      this.props.store.receiveTodo(todo);
+      // this.props.store.receiveTodo(todo);
+      //
+      this.props.updateTodo(todo).then(function () {
+        debugger;
+        _this2.setState({ loading: false });
+      });
+      console.log("After", todo);
     }
   }, {
     key: "deleteTodo",
     value: function deleteTodo(e) {
       e.preventDefault();
-      var key = this.props.todo.key;
-      this.props.store.removeTodo(this.props.todo);
+      this.setState({ loading: true });
+      // const key = this.props.todo.key;
+      // this.props.store.removeTodo(this.props.todo);
+      console.log("Delet button todo:", this.props.todo);
+      this.props.deleteTodo(this.props.todo);
+    }
+  }, {
+    key: "loading",
+    value: function loading() {
+      return this.state.loading;
     }
   }, {
     key: "render",
@@ -28244,12 +28314,12 @@ var TodoListItem = function (_React$Component) {
         _react2.default.createElement("t", null),
         _react2.default.createElement(
           "button",
-          { onClick: this.toggleTodo },
+          { disabled: this.loading(), onClick: this.toggleTodo },
           this.props.todo.done ? "Undo" : "Do"
         ),
         _react2.default.createElement(
           "button",
-          { onClick: this.deleteTodo },
+          { disabled: this.loading(), onClick: this.deleteTodo },
           "DELETE"
         )
       );
@@ -28319,7 +28389,7 @@ var TodoForm = function (_React$Component) {
       e.preventDefault();
       var todo = this.state;
 
-      // debugger;
+      //  ;
       this.props.createTodo(todo).then(function () {
         _this2.setState({ title: '', body: '', errors: [] });
       }).fail(function (err) {

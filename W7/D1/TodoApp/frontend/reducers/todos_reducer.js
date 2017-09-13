@@ -34,6 +34,7 @@ const todosReducer = (state = initialState, action) => {
       return merge({}, state, obj);
 
     case REMOVE_TODO:
+    console.log("INSIDE REMOVE: ", action);
       obj = {};
       for (let key in state) {
         if(key == action.todo.id){

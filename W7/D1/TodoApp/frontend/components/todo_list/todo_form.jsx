@@ -19,7 +19,7 @@ class TodoForm extends React.Component {
     e.preventDefault();
     let todo = this.state;
 
-    // debugger;
+    //  ;
     this.props.createTodo( todo ).then(() => {
       this.setState({ title: '', body: '', errors: []});
     }).fail((err) => {
