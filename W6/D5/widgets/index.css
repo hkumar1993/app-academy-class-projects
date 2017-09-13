@@ -1,0 +1,18 @@
+body{
+  width: 80%;
+  margin: 0 auto;
+  font-family: 'Roboto', sans-serif;
+}
+
+.clock, .weather {
+  width: 400px;
+  border: 1px solid black;
+  padding: 5px 20px;
+  font-size: 25px;
+  background: pink;
+}
+
+.clock p, .weather p {
+  display: flex;
+  justify-content: space-between;
+}
