@@ -2,20 +2,47 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+h1{
+  font-size: 30;
+}
+
+.pokedex{
+  display: flex;
+}
+
+.menu{
+  display: block;
+  width: 15%;
+  margin-right: 5%;
+}
+
+.pokemon-details{
+  display: block;
+  padding: 0 auto;
+  width: 80%;
+}
+
 ul{
   list-style: none;
-  width: 20%;
 }
 
 li{
   height: 30px;
   padding: 5px;
+  display: flex;
+  justify-content: space-between;
   img{
     margin-left: 5px;
   }
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 li:hover {
+  cursor: pointer;
   border: 1px solid black;
   box-shadow: 2px 2px 2px rgba(0,0,0,0.5);
   img{
