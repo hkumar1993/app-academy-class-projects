@@ -2,18 +2,44 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-h1{
-  font-size: 30;
-}
+
 
 .pokedex{
   display: flex;
 }
 
+.pokeItems{
+  display: flex;
+}
 .menu{
   display: block;
   width: 15%;
   margin-right: 5%;
+  li{
+    height: 30px;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    img{
+      margin-left: 5px;
+    }
+  }
+
+  li:hover {
+    cursor: pointer;
+    border: 1px solid black;
+    box-shadow: 2px 2px 2px rgba(0,0,0,0.5);
+    img{
+      -webkit-animation-name: wiggle;
+      -ms-animation-name: wiggle;
+      -ms-animation-duration: 1000ms;
+      -webkit-animation-duration: 1000ms;
+      -webkit-animation-iteration-count: 1;
+      -ms-animation-iteration-count: 1;
+      -webkit-animation-timing-function: ease-in-out;
+      -ms-animation-timing-function: ease-in-out;
+    }
+  }
 }
 
 .pokemon-details{
@@ -23,17 +49,8 @@ h1{
 }
 
 ul{
+  margin-left: 5px;
   list-style: none;
-}
-
-li{
-  height: 30px;
-  padding: 5px;
-  display: flex;
-  justify-content: space-between;
-  img{
-    margin-left: 5px;
-  }
 }
 
 a {
@@ -41,21 +58,7 @@ a {
   color: inherit;
 }
 
-li:hover {
-  cursor: pointer;
-  border: 1px solid black;
-  box-shadow: 2px 2px 2px rgba(0,0,0,0.5);
-  img{
-    -webkit-animation-name: wiggle;
-    -ms-animation-name: wiggle;
-    -ms-animation-duration: 1000ms;
-    -webkit-animation-duration: 1000ms;
-    -webkit-animation-iteration-count: 1;
-    -ms-animation-iteration-count: 1;
-    -webkit-animation-timing-function: ease-in-out;
-    -ms-animation-timing-function: ease-in-out;
-  }
-}
+
 
 @-webkit-keyframes wiggle {
   0% {-webkit-transform: rotate(10deg);}
