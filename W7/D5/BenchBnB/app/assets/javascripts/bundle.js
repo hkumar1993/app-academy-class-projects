@@ -9748,11 +9748,16 @@ var _reactDom = __webpack_require__(98);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
+var _session_api_util = __webpack_require__(184);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 document.addEventListener("DOMContentLoaded", function () {
+  window.postUser = _session_api_util.postUser;
+  window.postSession = _session_api_util.postSession;
+  window.deleteSession = _session_api_util.deleteSession;
   var root = document.getElementById('root');
-  ReactDOM.render(_react2.default.createElement(
+  _reactDom2.default.render(_react2.default.createElement(
     'h1',
     null,
     'Test'
@@ -22394,6 +22399,39 @@ var ReactDOMInvalidARIAHook = {
 
 module.exports = ReactDOMInvalidARIAHook;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 184 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var postUser = exports.postUser = function postUser(user) {
+  return $.ajax({
+    url: 'api/users',
+    method: 'POST',
+    data: { user: user }
+  });
+};
+
+var postSession = exports.postSession = function postSession(user) {
+  return $.ajax({
+    url: 'api/session',
+    method: 'POST',
+    data: { user: user }
+  });
+};
+
+var deleteSession = exports.deleteSession = function deleteSession() {
+  return $.ajax({
+    url: 'api/session',
+    method: 'DELETE'
+  });
+};
 
 /***/ })
 /******/ ]);
