@@ -2,7 +2,7 @@
   "name": "todo-self",
   "version": "1.0.0",
   "description": "",
-  "main": "todo_redux.js",
+  "main": "./frontend/todo_redux.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "webpack": "webpack --watch"
