@@ -7,6 +7,7 @@ export const postUser = (user) => {
 }
 
 export const postSession = (user) => {
+  console.log('User in postSession', user);
   return $.ajax({
     url: 'api/session',
     method: 'POST',

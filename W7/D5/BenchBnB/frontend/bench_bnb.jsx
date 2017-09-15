@@ -1,10 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { postUser, postSession, deleteSession } from './util/session_api_util'
+import configureStore from './store/store';
+import { login, logout, signup } from './actions/session_actions'
+
 document.addEventListener("DOMContentLoaded", ()=>{
-  window.postUser = postUser
-  window.postSession = postSession
-  window.deleteSession = deleteSession
+  const store = configureStore();
+
+  window.getState = store.getState;
+  window.dispatch = store.dispatch;
+
+  window.login = login;
+  window.logout = logout;
+  window.signup = signup;
+
   const root = document.getElementById('root');
   ReactDOM.render(<h1>Test</h1>, root)
 });
