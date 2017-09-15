@@ -1,0 +1,51 @@
+.main-nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 2px solid $light-gray;
+
+}
+
+.left-nav > ul,
+.right-nav > ul {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.left-nav > ul > li, .right-nav > ul > li:last-of-type {
+  // border: 1px solid black;
+  padding: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: $sans-serif;
+	text-transform: uppercase;
+  padding: 8px 10px;
+  margin: 0 2px;
+  border-radius: 5px 5px;
+	transition: background-color .5s;
+
+}
+
+.right-nav > ul > li {
+  margin: 0 2px;
+}
+
+// .right-nav > ul > li:last-of-type {
+//
+// }
+
+.left-nav > ul > li:hover,
+.right-nav > ul > li:last-of-type:hover {
+  background-color: $light-gray;
+  cursor: pointer;
+}
+
+.left-nav span {
+
+}
+
+
+.right-nav i {
+  font-size: 16px;
+}

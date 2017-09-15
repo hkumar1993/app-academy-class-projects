@@ -1,0 +1,26 @@
+<%= link_to "Original Post", post_url(@comment.post_id) %>
+<%= @comment.author.username %>
+<%= @comment.content %>
+<ul>
+  <% if @comment.child_comments %>
+    <% @comment.child_comments.each do |comment| %>
+    <li>
+      <%= comment.content %><br>
+      <%= comment.author.username %><br>
+      <%= link_to "Show Comment", comment_url(comment) %>
+    </li>
+    <% end %>
+  <% end %>
+</ul>
+
+
+<h5>Add Comment</h5>
+<form action="<%= comments_url %>" method="post">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <input type="hidden" name="comment[post_id]" value="<%= @comment.post_id %>">
+  <input type="hidden" name="comment[parent_comment_id]" value="<%= @comment.id %>">
+  <label for="Comment">Comment</label>
+  <input id="Comment" type="text" name="comment[content]" value="">
+
+  <input type="submit" name="" value="Comment">
+</form>
