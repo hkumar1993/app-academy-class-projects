@@ -1,15 +1,15 @@
-import React from 'react';
-import { Provider } from 'react-redux';
+import React from 'react'
+import { Provider } from 'react-redux'
 import { HashRouter } from 'react-router-dom';
-import App from './App.jsx';
+import App from './App';
+import BenchIndexContainer from './bench_index_container'
 
-
-const Root = (store) => (
-  <Provider store={store}>
+const Root = ({store}) => (
+  <Provider store={ store }>
     <HashRouter>
-      <App />
+      <App/>
     </HashRouter>
   </Provider>
 );
 
-export default Root;
+export default Root
